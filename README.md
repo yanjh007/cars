@@ -36,6 +36,7 @@ dev journal
 -- php-mysql as application backbone
 -- codeigniter as application framework
 -- bootstrap as front framework
+-- komode edit as dev tools
 -- application enveronment, database, rewrite config
 -- sample page and component
 -- login,logout and session controll help
@@ -44,9 +45,9 @@ dev journal
 -- client module dev in process
 
 # 20140812
-use github as source controll system
-transfer from xampp to nginx+php+mysql
-fix bug of transfer:
+-use github as source controll system, sourcetree as client
+-transfer from xampp to nginx+php+mysql, data export and import test(it's OK)
+-fix bug of transfer:
 --header aready sent(user model file has a space before <?php)
 --session uninitaled,use session_destroy after unset_userdata, once is enough
 
