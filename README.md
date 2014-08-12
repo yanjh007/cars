@@ -25,6 +25,32 @@ location /capp2 {
             # try_files $uri $uri/ /blog/index.php$request_uri$is_args$args; # it gets 500 server error
 }
 
-
 apache:
-.htaccess 
+.htaccess, see misc/htsample file 
+
+
+-------------------------------------------------------------------------
+dev journal
+# before 20140812
+-- chose SAE as cloud plateform
+-- php-mysql as application backbone
+-- codeigniter as application framework
+-- bootstrap as front framework
+-- application enveronment, database, rewrite config
+-- sample page and component
+-- login,logout and session controll help
+-- auth security, client sha1 submit, server sha1 password save
+-- some database structure
+-- client module dev in process
+
+# 20140812
+use github as source controll system
+transfer from xampp to nginx+php+mysql
+fix bug of transfer:
+--header aready sent(user model file has a space before <?php)
+--session uninitaled,use session_destroy after unset_userdata, once is enough
+
+
+
+
+
