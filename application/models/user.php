@@ -9,5 +9,6 @@ Class User extends CI_Model {
           return NULL;
        }
   }
+ 
 }
 ?>

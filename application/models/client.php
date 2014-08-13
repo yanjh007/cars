@@ -24,4 +24,14 @@ class Client extends CI_Model {
 
 
   }
+  
+  function get_passwd_by_login($login) {
+    $query = $this->db->query("SELECT passwd FROM clients where login ='".$login."' limit 1");
+
+    if($query -> num_rows() > 0) {
+      return $query->row()->passwd;
+    } else {
+        return NULL;
+    }
+  }
 }

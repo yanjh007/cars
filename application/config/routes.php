@@ -13,6 +13,9 @@ $route['clients/(:any)'] = 'clients/detail/$1';
 $route['clients/edit/(:any)'] = 'clients/edit/$1';
 
 
+$route['service'] = 'service';
+
+
 $route['404_override'] = '';
 
 
