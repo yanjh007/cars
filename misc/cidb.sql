@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : cidb
+ Source Server         : localdb
  Source Server Type    : MySQL
- Source Server Version : 50616
+ Source Server Version : 50620
  Source Host           : localhost
  Source Database       : cidb
 
  Target Server Type    : MySQL
- Target Server Version : 50616
+ Target Server Version : 50620
  File Encoding         : utf-8
 
- Date: 08/12/2014 12:12:41 PM
+ Date: 08/13/2014 17:04:03 PM
 */
 
 SET NAMES utf8;
@@ -51,7 +51,7 @@ CREATE TABLE `ci_sessions` (
 --  Records of `ci_sessions`
 -- ----------------------------
 BEGIN;
-INSERT INTO `ci_sessions` VALUES ('6ebceecf184bcf787650d2dbbcb24245', '::1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.77.4 (KHTML, like Gecko) Version/7.0.5 Safari/537.77.4', '1407767100', 'a:2:{s:9:\"user_data\";s:0:\"\";s:9:\"logged_in\";a:4:{s:2:\"id\";s:1:\"1\";s:5:\"login\";s:5:\"yanjh\";s:4:\"role\";s:3:\"100\";s:4:\"name\";s:9:\"颜建华\";}}');
+INSERT INTO `ci_sessions` VALUES ('384f5f9ad78e930e94708edea74bfb66', '127.0.0.1', 'VisualJSON/1.6.0 CFNetwork/708.1 Darwin/14.0.0 (x86_64)', '1407918783', ''), ('6f2b4581f49c9fa1cf022096993352f3', '127.0.0.1', 'VisualJSON/1.6.0 CFNetwork/708.1 Darwin/14.0.0 (x86_64)', '1407917802', ''), ('838b75b224d1c40e06d85d8860c5b4f8', '192.168.0.131', 'VisualJSON/1.6.0 CFNetwork/708.1 Darwin/14.0.0 (x86_64)', '1407917854', ''), ('bd44796f79a2b7fa09c0c1865aea2dd1', '192.168.0.131', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Safari/600.1.3', '1407918731', ''), ('cdd77c2ddf01d042949becd3e6401618', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Safari/600.1.3', '1407918663', '');
 COMMIT;
 
 -- ----------------------------
@@ -79,7 +79,7 @@ CREATE TABLE `clients` (
 --  Records of `clients`
 -- ----------------------------
 BEGIN;
-INSERT INTO `clients` VALUES ('1', null, 'shixc', null, null, '施磊', null, null, '18602802121', 'X_shileixc', null, '1', null), ('2', null, 'yanjh', null, null, '颜建华', null, null, '13808077242', 'X_hahar006', null, '0', null);
+INSERT INTO `clients` VALUES ('1', null, 'shixc', 'a5b09e5b217127812c3f0e778dd1098404ce1fd4', null, '施磊', null, null, '18602802121', 'X_shileixc', null, '1', '2014-08-13 11:03:01'), ('2', null, 'yanjh', null, null, '颜建华', null, null, '13808077242', 'X_hahar006', null, '0', null);
 COMMIT;
 
 -- ----------------------------
@@ -159,5 +159,19 @@ CREATE TABLE `users` (
 BEGIN;
 INSERT INTO `users` VALUES ('1', 'yanjh', '颜建华', '8db1b26f628cddbccb4df5f4530bf853fdca99ea', null, '100'), ('2', 'admin', '管理员', 'f342a7cf3fb38d37dc8a2f6d34f6957569195948', null, '100'), ('3', 'shixc', '施磊', '7e8b8c0eaa636c59c029f5b9b5e1543f6f4117e6', null, '0');
 COMMIT;
+
+-- ----------------------------
+--  Table structure for `zm_sessions`
+-- ----------------------------
+DROP TABLE IF EXISTS `zm_sessions`;
+CREATE TABLE `zm_sessions` (
+  `session_type` tinyint(4) DEFAULT '0' COMMENT 'session类型，用于不同的系统和应用',
+  `session_id` varchar(56) NOT NULL COMMENT 'sha1(时间)+ip(aaaaaaaa)',
+  `client_id` varchar(20) DEFAULT NULL,
+  `stime` datetime DEFAULT NULL,
+  `device_id` varchar(20) DEFAULT NULL,
+  `ip_address` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`session_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -52,6 +52,9 @@ dev journal
 --session uninitaled,use session_destroy after unset_userdata, once is enough
 
 
+# 20140813
+- service interface
+- appclient login and verify service, database zmsession structure
 
 
 
