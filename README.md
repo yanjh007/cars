@@ -56,5 +56,9 @@ dev journal
 - service interface
 - appclient login and verify service, database zmsession structure
 
+# 20140814
+- client module form, and workflow
+- js,jquery and ajax integrate
+
 
 
