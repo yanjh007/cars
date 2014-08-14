@@ -19,9 +19,9 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">客户管理 <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="clients">客户管理</a></li>
-            <li><a href="cars">车辆管理</a></li>
-            <li><a href="plans">维护计划</a></li>
+            <li><a href="<?= base_url("clients") ?>">客户管理</a></li>
+            <li><a href="<?= base_url("cars") ?>">车辆管理</a></li>
+            <li><a href="<?= base_url("plans") ?>">维护计划</a></li>
             <li class="divider"></li>
             <li><a href="#">预约管理</a></li>
             <li><a href="prices">报价管理</a></li>

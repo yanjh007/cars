@@ -5,7 +5,7 @@ class Client extends CI_Model {
   }
 
   public function search($keyword = FALSE) {
-    $sql="SELECT id,name,mobile FROM clients" ;
+    $sql="SELECT id,name,mobile,wechat FROM clients" ;
     if ($keyword) {
       $sql=$sql." where name like %'".$keyword."'% ";
     }
@@ -15,14 +15,36 @@ class Client extends CI_Model {
   }
 
   public function get_client($cid){
-    $sql="SELECT id,name,mobile FROM clients where id=".$cid ;
+    $sql="SELECT id,name,mobile,wechat FROM clients where id=".$cid ;
     $query = $this->db->query($sql);
     return $query->row_array();
   }
   
-  public function save(){
-
-
+  public function save($client) {
+	if (isset($client["client_id"]) ) { // insert
+        $clientid= $client["client_id"];    
+        $data = array(
+               'wechat' => $client["im"],
+               'name'   => $client["name"],
+               'mobile' => $client["mobile"],
+              );
+        $this->db->where('id', $clientid);
+        $this->db->update('clients', $data); 
+	} else {
+        $data = array(
+               'wechat' => $client["im"],
+               'name'   => $client["name"],
+               'mobile' => $client["mobile"],
+              );
+        $this->db->insert('clients', $data); 
+	}
+    return TRUE;
+  }
+  
+  public function remove($client_id) {
+    $this->db->where('id', $client_id);
+    $this->db->delete('clients'); 
+    return TRUE;
   }
   
   function get_passwd_by_login($login) {

@@ -9,9 +9,9 @@ $route['news/(:any)'] = 'news/view/$1';
 $route['news/create'] = 'news/create';
 
 $route['clients'] = 'clients';
-$route['clients/(:any)'] = 'clients/detail/$1';
+$route['clients/save'] = 'clients/save';
 $route['clients/edit/(:any)'] = 'clients/edit/$1';
-
+$route['clients/(:any)'] = 'clients/detail/$1';
 
 $route['service'] = 'service';
 
