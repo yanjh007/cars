@@ -1,80 +1,66 @@
 <div class="container">
     <div class="page-header">
-      <h1>客户管理 <small>副标题</small></h1>
+      <h1>字典管理 </h1>
     </div>
 
     <div class="row">
         <div class="col-md-8">
-		    <div class="panel panel-default">
-				<!-- Default panel contents -->
-				
-				<div class="panel-heading" >					
-					客户列表（最近20位）
-					<div class="input-group pull-right col-md-6">						
-						<input type="text" class="form-control" id="keyword">
-						<span class="input-group-btn">
-							<button class="btn btn-default" type="button" onclick="do_search()">搜索</button>
-						</span>
-					</div><!-- /input-group -->
-					<div style="clear: both"></div>
-				</div>
-		      
-				<!-- Table -->
-			  <table class="table">
-		        <thead>
-		          <tr><th>#</th><th>姓名</th><th>手机</th><th>IM</th><th><div class="pull-right"> 操作</div></th></tr>
-		        </thead>
-
-		        <tbody>
-
-				<?php foreach ($clients as $item): ?>
-		          <tr>
-		            <td><?= $item["id"]; ?></td>
-		            <td><?= anchor("clients/".$item["id"],$item["name"],""); ?></td>
-		            <td><?= $item['mobile']; ?></td>
-		            <td><?= $item['wechat']; ?></td>
-		            <td align=right>
-		            	<?= anchor("clients/".$item["id"]."?method=edit","编辑"); ?> |
-						<a href="#" onclick="confirm_del(<?= $item["id"].",'".$item["name"]."'" ?>);">删除</a>
-		            </td>
-		          </tr>
-				<?php endforeach ?>
-		        </tbody>
-		      </table>
-		    </div>    
+			<?php foreach ($dic_list as $item): ?>
+				<?php if ($item["did"]==0): ?>
+					<div class="panel panel-default">
+					<div class="panel-heading" ><?= $item["name"]; ?></div>
+					<div class="row show-grid">
+				<?php elseif ($item["did"]==100): ?>
+					</div></div>
+				<?php else:  ?>
+					<div class="col-xs-4">
+					<button type="button" class="btn btn-primary"><?= $item["name"] ?></button>
+					</div>
+				<?php endif ?>
+			<?php endforeach ?>
         </div>
-        
+
         <div class="col-md-4">
 		    <div class="panel panel-default">
 				<!-- Default panel contents -->
-				<div class="panel-heading">增加客户</div>				
+				<div class="panel-heading">增加项目</div>				
 				<div class="panel-body">				
-					<?= form_open('clients/save',array("role"=>"form")); ?>
+					<?= form_open('dics/save',array("role"=>"form")); ?>
+					<div class="form-group">
+					  <label for="exampleInputEmail1">类 型</label>
+					  <?= form_input(array( 'name'  => 'name',
+											'id'    => 'username',
+											'class' => 'form-control',
+												)); ?>
+					</div>
+
 					<div class="form-group">
 					  <label for="exampleInputEmail1">名 称</label>
 					  <?= form_input(array( 'name'  => 'name',
-											'id'    => 'name',
+											'id'    => 'username',
 											'class' => 'form-control',
-											)); ?>
+												)); ?>
 					</div>
 					<div class="form-group">
-					  <label for="exampleInputPassword1">手 机</label>
+					  <label for="exampleInputPassword1">次 序</label>
 					  <?= form_input(array('name'  => 'mobile',
 												'id'    => 'mobile',
 												'class' => 'form-control'
 												)); ?>
 					</div>
 					<div class="form-group">
-					  <label for="exampleInputPassword1">IM方式(微信或QQ)</label>
+					  <label for="exampleInputPassword1">简 写</label>
 					  <?= form_input(array('name'  => 'im',
 												'id'    => 'im',
 												'class' => 'form-control'
 												)); ?>
 					</div>
-					<div class="checkbox">
-					  <label>
-						<input type="checkbox"> VIP
-					  </label>
+					<div class="form-group">
+					  <label for="exampleInputPassword1">简单描述</label>
+					  <?= form_input(array('name'  => 'im',
+												'id'    => 'im',
+												'class' => 'form-control'
+												)); ?>
 					</div>
 					<button type="submit" class="btn btn-primary">增 加</button>
 					</form>
@@ -82,6 +68,7 @@
 		    </div>
 		</div>
     </div>
+
 
 <script type="text/javascript">
 	function confirm_del(cid,cname){

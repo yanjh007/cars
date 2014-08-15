@@ -10,11 +10,18 @@ $route['news/create'] = 'news/create';
 
 $route['clients'] = 'clients';
 $route['clients/save'] = 'clients/save';
+$route['clients/link'] = 'clients/link';
 $route['clients/edit/(:any)'] = 'clients/edit/$1';
 $route['clients/(:any)'] = 'clients/detail/$1';
 
-$route['service'] = 'service';
 
+$route['cars'] = 'cars';
+$route['cars/save'] = 'cars/save';
+$route['cars/link'] = 'cars/save';
+$route['cars/edit/(:any)'] = 'cars/edit/$1';
+$route['cars/(:any)'] = 'cars/detail/$1';
+
+$route['service'] = 'service';
 
 $route['404_override'] = '';
 

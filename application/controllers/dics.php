@@ -1,28 +1,23 @@
 <?php
-class Clients extends CI_Controller {
+class Dics extends CI_Controller {
 
   public function __construct()
   {
     parent::__construct();
-    $this->load->model('client');
+    $this->load->model('dic');
     check_session();
   }
 
   public function index(){
 	$this->load->helper('form');
 	
-	if ($this->input->get("search")) {
-	  $keyword=$this->input->get("search");
-	  $data['clients'] = $this->client->search($keyword);
-	} else {
-	  $data['clients'] = $this->client->search();
-	}
-
+	$data['dic_list'] = $this->dic->get_list();
+	//var_dump($data);
     $this->load->view('_common/header');
     
     show_nav(11);
 
-    $this->load->view('clients/list', $data);
+    $this->load->view('dics/list', $data);
 
     $this->load->view('_common/footer');
   }
@@ -48,17 +43,14 @@ class Clients extends CI_Controller {
 	  
 	  $this->load->view('clients/edit', $data);
 	  $this->load->view('_common/footer');	  
-	} else { //详情页面 基本信息 车辆信息
+	} else {
 	  $data['client'] = $this->client->get_client($cid);
 	  if (empty($data['client'])) show_404();
 
-	  $this->load->helper('form');
 	  $this->load->view('_common/header');
 	  show_nav(11);
 	  
-	  $data['cars'] = $this->client->get_cars($cid);
 	  $this->load->view('clients/detail', $data);
-	  
 	  $this->load->view('_common/footer');	  
 	}
   }
@@ -66,18 +58,5 @@ class Clients extends CI_Controller {
   public function save() {	
 	$this->client->save($this->input->post());
 	redirect('clients');
-  }
-  
-  public function link() {
-	$clientid=$this->input->post("client_id");
-	if ($clientid) {
-	  $this->client->link($this->input->post());
-	  redirect('clients/'.$clientid);
-	} else {
-	  redirect('clients');
-	}
-	
   }  
-
-  
 }

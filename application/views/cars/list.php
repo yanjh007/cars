@@ -1,6 +1,6 @@
 <div class="container">
     <div class="page-header">
-      <h1>客户管理 <small>副标题</small></h1>
+      <h1>车辆管理 </h1>
     </div>
 
     <div class="row">
@@ -9,7 +9,7 @@
 				<!-- Default panel contents -->
 				
 				<div class="panel-heading" >					
-					客户列表（最近20位）
+					车辆列表（最近20位）
 					<div class="input-group pull-right col-md-6">						
 						<input type="text" class="form-control" id="keyword">
 						<span class="input-group-btn">
@@ -22,20 +22,20 @@
 				<!-- Table -->
 			  <table class="table">
 		        <thead>
-		          <tr><th>#</th><th>姓名</th><th>手机</th><th>IM</th><th><div class="pull-right"> 操作</div></th></tr>
+		          <tr><th>#</th><th>牌号</th><th>车系</th><th>款型</th><th><div class="pull-right"> 操作</div></th></tr>
 		        </thead>
 
 		        <tbody>
 
-				<?php foreach ($clients as $item): ?>
+				<?php foreach ($cars as $item): ?>
 		          <tr>
 		            <td><?= $item["id"]; ?></td>
-		            <td><?= anchor("clients/".$item["id"],$item["name"],""); ?></td>
-		            <td><?= $item['mobile']; ?></td>
-		            <td><?= $item['wechat']; ?></td>
+		            <td><?= anchor("cars/".$item["id"],$item["carnumber"],""); ?></td>
+		            <td><?= $item['manufacturer']."-".$item['brand']; ?></td>
+		            <td><?= $item['brand']; ?></td>
 		            <td align=right>
-		            	<?= anchor("clients/".$item["id"]."?method=edit","编辑"); ?> |
-						<a href="#" onclick="confirm_del(<?= $item["id"].",'".$item["name"]."'" ?>);">删除</a>
+		            	<?= anchor("cars/".$item["id"]."?method=edit","编辑"); ?> |
+						<a href="#" onclick="confirm_del(<?= $item["id"].",'".$item["carnumber"]."'" ?>);">删除</a>
 		            </td>
 		          </tr>
 				<?php endforeach ?>
@@ -47,34 +47,29 @@
         <div class="col-md-4">
 		    <div class="panel panel-default">
 				<!-- Default panel contents -->
-				<div class="panel-heading">增加客户</div>				
+				<div class="panel-heading">增加车辆</div>				
 				<div class="panel-body">				
-					<?= form_open('clients/save',array("role"=>"form")); ?>
+					<?= form_open('cars/save',array("role"=>"form")); ?>
 					<div class="form-group">
-					  <label for="exampleInputEmail1">名 称</label>
-					  <?= form_input(array( 'name'  => 'name',
-											'id'    => 'name',
+					  <label for="exampleInputEmail1">牌照号码</label>
+					  <?= form_input(array( 'name'  => 'carnumber',
+											'id'    => 'carnumber',
 											'class' => 'form-control',
+												)); ?>
+					</div>
+					<div class="form-group">
+					  <label for="exampleInputPassword1">制造厂商</label>
+					  <?= form_input(array( 'name'  => 'manufacturer',
+											'id'    => 'manufacturer',
+											'class' => 'form-control'
 											)); ?>
 					</div>
 					<div class="form-group">
-					  <label for="exampleInputPassword1">手 机</label>
-					  <?= form_input(array('name'  => 'mobile',
-												'id'    => 'mobile',
-												'class' => 'form-control'
-												)); ?>
-					</div>
-					<div class="form-group">
-					  <label for="exampleInputPassword1">IM方式(微信或QQ)</label>
-					  <?= form_input(array('name'  => 'im',
-												'id'    => 'im',
-												'class' => 'form-control'
-												)); ?>
-					</div>
-					<div class="checkbox">
-					  <label>
-						<input type="checkbox"> VIP
-					  </label>
+					  <label for="exampleInputPassword1">品牌系列</label>
+					  <?= form_input(array( 'name'  => 'brand',
+											'id'    => 'brand',
+											'class' => 'form-control'
+											)); ?>
 					</div>
 					<button type="submit" class="btn btn-primary">增 加</button>
 					</form>
@@ -83,10 +78,11 @@
 		</div>
     </div>
 
+
 <script type="text/javascript">
 	function confirm_del(cid,cname){
 		$("#cname").text(cname);
-		$("#clientid").text(cid);
+		$("#carid").text(cid);
 		$('#dlg_remove').modal('show').on('shown',function() {
 			 
 		})
@@ -94,7 +90,7 @@
 
 	function do_del(){
 		//this will redirect us in same window
-		document.location.href = "clients/"+$("#clientid").text()+"?method=delete";
+		document.location.href = "cars/"+$("#carid").text()+"?method=delete";
 	}
 	
 	function do_search() {
@@ -102,7 +98,7 @@
 		
 		//this will redirect us in same window
 		if (keyword.length>0){
-			document.location.href = "clients?search="+keyword;
+			document.location.href = "cars?search="+keyword;
 		} else {
 			alert( "搜索关键字无效");
 		}
@@ -114,11 +110,11 @@
 		var clientid=$("#clientid").text();
 		$.ajax({
 			type: "DELETE",
-			url: "clients/"+clientid,
+			url: "cars/"+clientid,
 		})
 		.done(function( msg ) {
 			if (msg == "OK"){
-				document.location.href = "clients/";
+				document.location.href = "cars/";
 			} else {
 				alert( "处理错误:" + msg );
 			}
@@ -133,10 +129,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">确认删除客户信息</h4>
+        <h4 class="modal-title">确认删除车辆信息</h4>
       </div>
       <div class="modal-body">
-        <p>您确认要删除相关客户信息吗:</p>
+        <p>您确认要删除相关车辆信息吗:</p>
 		<p id="cname"></p>
       </div>
       <div class="modal-footer">

@@ -60,5 +60,12 @@ dev journal
 - client module form, and workflow
 - js,jquery and ajax integrate
 
+# 20140815
+- cars modle,table,base view, routes
+- links table
+- clients and cars link, client side
+- dic table, dic list view
+
+
 
 
