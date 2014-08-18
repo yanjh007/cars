@@ -66,6 +66,14 @@ dev journal
 - clients and cars link, client side
 - dic table, dic list view
 
+# 20140818
+- general link model, link and unlink method
+- shop module update
+- tasktype and taskgroup module, db, m-m relation implement
+- route improve, wild match, no need define route for eatch resource
+- user module improvced
+
+
 
 
 
