@@ -1,6 +1,6 @@
 <div class="container">
     <div class="page-header">
-      <h1>客户管理 <small>主页</small></h1>
+      <h1>用户管理 </h1>
     </div>
 
     <div class="row">
@@ -9,7 +9,7 @@
 				<!-- Default panel contents -->
 				
 				<div class="panel-heading" >					
-					客户列表（最近20位）
+					用户列表（最近20位）
 					<div class="input-group pull-right col-md-6">						
 						<input type="text" class="form-control" id="keyword">
 						<span class="input-group-btn">
@@ -22,17 +22,19 @@
 				<!-- Table -->
 			  <table class="table">
 		        <thead>
-		          <tr><th>#</th><th>姓名</th><th>手机</th><th>IM</th><th><div class="pull-right"> 操作</div></th></tr>
+		          <tr><th>#</th><th>登录名称</th><th>显示名称</th><th>手机</th><th>角色</th><th>店铺</th><th><div class="pull-right"> 操作</div></th></tr>
 		        </thead>
 
 		        <tbody>
 
-				<?php foreach ($clients as $item): ?>
+				<?php foreach ($users as $item): ?>
 		          <tr>
 		            <td><?= $item["id"]; ?></td>
-		            <td><?= anchor("clients/".$item["id"],$item["name"],""); ?></td>
+		            <td><?= $item['login']; ?></td>
+		            <td><?= anchor("user/".$item["id"],$item["name"],""); ?></td>
 		            <td><?= $item['mobile']; ?></td>
-		            <td><?= $item['wechat']; ?></td>
+		            <td><?= $item['role']; ?></td>
+		            <td><?= $item['mobile']; ?></td>
 		            <td align=right>
 		            	<?= anchor("clients/".$item["id"]."/edit","编辑"); ?> |
 						<a href="#" onclick="confirm_del(<?= $item["id"].",'".$item["name"]."'" ?>);">删除</a>
@@ -47,25 +49,25 @@
         <div class="col-md-4">
 		    <div class="panel panel-default">
 				<!-- Default panel contents -->
-				<div class="panel-heading">增加客户</div>				
+				<div class="panel-heading">增加用户</div>				
 				<div class="panel-body">				
 					<?= form_open('clients/save',array("role"=>"form")); ?>
 					<div class="form-group">
-					  <label for="exampleInputEmail1">名 称</label>
+					  <label for="exampleInputEmail1">显示名称</label>
 					  <?= form_input(array( 'name'  => 'name',
 											'id'    => 'name',
 											'class' => 'form-control',
 											)); ?>
 					</div>
 					<div class="form-group">
-					  <label for="exampleInputPassword1">手 机</label>
-					  <?= form_input(array('name'  => 'mobile',
-												'id'    => 'mobile',
-												'class' => 'form-control'
-												)); ?>
+					  <label for="exampleInputPassword1">登录名称</label>
+					  <?= form_input(array('name'  =>'',
+											'id'   => 'mobile',
+										   'class' => 'form-control'
+											)); ?>
 					</div>
 					<div class="form-group">
-					  <label for="exampleInputPassword1">IM方式(微信或QQ)</label>
+					  <label for="exampleInputPassword1">密码</label>
 					  <?= form_input(array('name'  => 'im',
 												'id'    => 'im',
 												'class' => 'form-control'
@@ -73,7 +75,7 @@
 					</div>
 					<div class="checkbox">
 					  <label>
-						<input type="checkbox"> VIP
+						<input type="checkbox">管理员
 					  </label>
 					</div>
 					<button type="submit" class="btn btn-primary">增 加</button>
@@ -87,8 +89,7 @@
 	function confirm_del(cid,cname){
 		$("#cname").text(cname);
 		$("#clientid").text(cid);
-		$('#dlg_remove').modal('show').on('shown',function() {
-			 
+		$('#dlg_remove').modal('show').on('shown',function() {			 
 		})
 	}
 
@@ -105,8 +106,7 @@
 			document.location.href = "clients?search="+keyword;
 		} else {
 			alert( "搜索关键字无效");
-		}
-		
+		}		
 	}
 	
 	function ajax_del(){
@@ -133,10 +133,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">确认删除客户信息</h4>
+        <h4 class="modal-title">确认删除用户</h4>
       </div>
       <div class="modal-body">
-        <p>您确认要删除相关客户信息吗:</p>
+        <p>您确认要删除下列用户:</p>
 		<p id="cname"></p>
       </div>
       <div class="modal-footer">

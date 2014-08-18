@@ -32,14 +32,14 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">系统管理<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="users">用户管理</a></li>
-                  <li><a href="shops">店铺管理</a></li>
+                  <li><?= anchor(base_url("users"),"用户管理") ?>
+                  <li><?= anchor(base_url("shops"),"店铺管理") ?></li>
                   <li class="divider"></li>
-                  <li><a href=<?= base_url("dics") ?>>字典管理</a></li>
-                  <li><a href="tasktype">任务类型</a></li>
-                  <li><a href="logout">车型管理</a></li>
+                  <li><?= anchor(base_url("tasktypes"),"任务类型") ?></li>
+                  <li><?= anchor(base_url("taskgroups"),"任务组管理") ?></li>
                   <li class="divider"></li>
-                  <li><a href="logout">系统设置</a></li>
+                  <li><?= anchor(base_url("dics"),"字典管理") ?></li>
+                  <li><a href="settings">系统设置</a></li>
                 </ul>
             </li>
          <?php } ?>

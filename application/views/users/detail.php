@@ -16,8 +16,7 @@
                 </dl>
             </div>
             
-            <?php
-            foreach ((array)$cars as $item): ?>
+            <?php foreach ($cars as $item): ?>
             <div class="panel panel-default">
                 <div class="panel-heading" >车辆信息: <?= $item["rname"] ?></div>
                 <br>

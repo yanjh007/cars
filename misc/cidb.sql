@@ -11,7 +11,7 @@
  Target Server Version : 50620
  File Encoding         : utf-8
 
- Date: 08/15/2014 16:52:12 PM
+ Date: 08/18/2014 17:00:29 PM
 */
 
 SET NAMES utf8;
@@ -71,7 +71,7 @@ CREATE TABLE `ci_sessions` (
 --  Records of `ci_sessions`
 -- ----------------------------
 BEGIN;
-INSERT INTO `ci_sessions` VALUES ('30b3aaa77a1376d0a728adf324c5f816', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Safari/600.1.3', '1408091419', 'a:2:{s:9:\"user_data\";s:0:\"\";s:9:\"logged_in\";a:4:{s:2:\"id\";s:1:\"1\";s:5:\"login\";s:5:\"yanjh\";s:4:\"role\";s:3:\"100\";s:4:\"name\";s:9:\"颜建华\";}}'), ('64e894ccba47a37ae5f1848e69264458', '192.168.0.202', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36', '1408086379', 'a:2:{s:9:\"user_data\";s:0:\"\";s:9:\"logged_in\";a:4:{s:2:\"id\";s:1:\"1\";s:5:\"login\";s:5:\"yanjh\";s:4:\"role\";s:3:\"100\";s:4:\"name\";s:9:\"颜建华\";}}');
+INSERT INTO `ci_sessions` VALUES ('d9acfcab85e4b922a30683ab0d0b15b4', '127.0.0.1', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Safari/600.1.3', '1408348844', 'a:2:{s:9:\"user_data\";s:0:\"\";s:9:\"logged_in\";a:4:{s:2:\"id\";s:1:\"1\";s:5:\"login\";s:5:\"yanjh\";s:4:\"role\";s:3:\"100\";s:4:\"name\";s:9:\"颜建华\";}}');
 COMMIT;
 
 -- ----------------------------
@@ -129,19 +129,20 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `links`;
 CREATE TABLE `links` (
-  `ltype` smallint(6) DEFAULT NULL,
-  `lid` int(11) DEFAULT NULL,
+  `ltype` smallint(6) NOT NULL DEFAULT '0',
+  `lid` int(11) NOT NULL DEFAULT '0',
   `lname` varchar(20) DEFAULT NULL,
-  `rid` int(11) DEFAULT NULL,
+  `rid` int(11) NOT NULL DEFAULT '0',
   `rname` varchar(20) DEFAULT NULL,
-  `lorder` int(11) DEFAULT NULL
+  `lorder` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ltype`,`lid`,`rid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `links`
 -- ----------------------------
 BEGIN;
-INSERT INTO `links` VALUES ('1', '10', '陶莉', '2', '川A-A1574', null), ('1', '10', '陶莉', '1', '川A-BQ498', null);
+INSERT INTO `links` VALUES ('1', '10', '陶莉', '1', '川A-BQ498', null), ('1', '10', '陶莉', '2', '川A-A1574', null), ('2', '1', '', '2', '洗车-中大型', null), ('2', '1', '', '4', '更换轮胎', null), ('2', '1', '', '7', 'x', null), ('2', '1', '', '8', 'A0级日常保养', null);
 COMMIT;
 
 -- ----------------------------
@@ -163,21 +164,39 @@ CREATE TABLE `news` (
 DROP TABLE IF EXISTS `shops`;
 CREATE TABLE `shops` (
   `id` smallint(6) NOT NULL AUTO_INCREMENT,
-  `code` varchar(8) DEFAULT NULL,
+  `scode` varchar(8) DEFAULT NULL,
   `name` varchar(20) DEFAULT NULL,
   `address` varchar(128) DEFAULT NULL,
   `geoaddress` varchar(100) DEFAULT NULL,
   `contact` varchar(50) DEFAULT NULL,
   `desc` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `idx_code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  KEY `idx_code` (`scode`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `shops`
 -- ----------------------------
 BEGIN;
-INSERT INTO `shops` VALUES ('1', 'CDS001', '天府新区旗舰店', '天府软件园', '104.073938889,30.55955278\nN30.55955278,', '028-86000998', null);
+INSERT INTO `shops` VALUES ('1', 'CDS001', '天府新区旗舰店', '天府软件园', '104.073938889,30.55955278\nN30.55955278,', '028-86000998', null), ('2', 'CDN002', '火车北站店', '北站1路12号', null, '028-86000998', null), ('3', 's', 'x', null, null, '', null), ('4', 'CDE001', '川师大店', '川师大南门', null, '13809998789', null), ('5', 'CDW002', '西门车站店', '西门车站', null, '13809987654', null), ('6', null, '四轮定位', null, null, null, null);
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `taskgroups`
+-- ----------------------------
+DROP TABLE IF EXISTS `taskgroups`;
+CREATE TABLE `taskgroups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) DEFAULT NULL,
+  `descp` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Records of `taskgroups`
+-- ----------------------------
+BEGIN;
+INSERT INTO `taskgroups` VALUES ('1', 'A0普通日常保养', '');
 COMMIT;
 
 -- ----------------------------
@@ -186,19 +205,22 @@ COMMIT;
 DROP TABLE IF EXISTS `tasktypes`;
 CREATE TABLE `tasktypes` (
   `id` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `code` varchar(10) DEFAULT NULL,
+  `tcode` varchar(10) DEFAULT NULL,
   `name` varchar(20) DEFAULT NULL,
   `desc` varchar(200) DEFAULT NULL,
   `duration1` tinyint(4) DEFAULT '0' COMMENT '按日期计算的任务间隔',
   `duration2` smallint(6) DEFAULT '0' COMMENT '按里程计算的任务间隔',
+  `price` int(11) DEFAULT NULL,
+  `tasktime` smallint(6) DEFAULT NULL,
+  `taskprice` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Records of `tasktypes`
 -- ----------------------------
 BEGIN;
-INSERT INTO `tasktypes` VALUES ('1', 'W001', '洗车-小型', null, '15', '0'), ('2', 'W002', '洗车-中大型', null, '30', '0'), ('3', 'T101', '更换发动机油滤', null, '60', '6000'), ('4', 'T201', '更换轮胎', null, '127', '32767'), ('5', 'C001', '常规检查', null, '0', '0'), ('6', 'C002', '高级检查', null, '0', '0');
+INSERT INTO `tasktypes` VALUES ('1', 'W001', '洗车-小型', null, '15', '0', null, null, null), ('2', 'W002', '洗车-中大型', null, '30', '0', null, null, null), ('3', 'T101', '更换发动机油滤', null, '60', '6000', null, null, null), ('4', 'T201', '更换轮胎', null, '127', '32767', null, null, null), ('5', 'C001', '常规检查', null, '0', '0', null, null, null), ('6', 'C002', '高级检查', null, '0', '0', null, null, null), ('7', 'x', 'x', null, '30', '3000', null, '30', '100'), ('8', null, 'A0级日常保养', null, null, null, null, null, null);
 COMMIT;
 
 -- ----------------------------
@@ -212,6 +234,8 @@ CREATE TABLE `users` (
   `passwd` varchar(100) DEFAULT NULL,
   `desc` varchar(256) DEFAULT NULL,
   `role` tinyint(4) NOT NULL DEFAULT '0',
+  `shop` int(11) DEFAULT NULL,
+  `mobile` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
@@ -219,7 +243,7 @@ CREATE TABLE `users` (
 --  Records of `users`
 -- ----------------------------
 BEGIN;
-INSERT INTO `users` VALUES ('1', 'yanjh', '颜建华', '8db1b26f628cddbccb4df5f4530bf853fdca99ea', null, '100'), ('2', 'admin', '管理员', 'f342a7cf3fb38d37dc8a2f6d34f6957569195948', null, '100'), ('3', 'shixc', '施磊', '7e8b8c0eaa636c59c029f5b9b5e1543f6f4117e6', null, '0');
+INSERT INTO `users` VALUES ('1', 'yanjh', '颜建华', '8db1b26f628cddbccb4df5f4530bf853fdca99ea', null, '100', null, null), ('2', 'admin', '管理员', 'f342a7cf3fb38d37dc8a2f6d34f6957569195948', null, '100', null, null), ('3', 'shixc', '施磊', '7e8b8c0eaa636c59c029f5b9b5e1543f6f4117e6', null, '0', null, null);
 COMMIT;
 
 -- ----------------------------

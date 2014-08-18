@@ -24,6 +24,7 @@ function check_session()
 
 function show_nav($current_tab)
 {
+   
    $CI=&get_instance();
    $user = $CI->session->userdata('logged_in'); 
    if (!$user) {
@@ -32,7 +33,8 @@ function show_nav($current_tab)
 
    $navdata['username'] = $user['name']; 
    $navdata['userrole'] = $user['role']; // 将title中的第一个字符大写
-         
+   
+   $CI->load->helper('url');      
    $CI->load->view('_common/navbar',$navdata);
 }
 

@@ -1,30 +1,20 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+// 默认和特别路由
 $route['default_controller'] = "home";
 $route['login']  = 'home/login';
 $route['logout'] = 'home/logout';
-
-$route['news'] = 'news';
-$route['news/(:any)'] = 'news/view/$1';
-$route['news/create'] = 'news/create';
-
-$route['clients'] = 'clients';
-$route['clients/save'] = 'clients/save';
-$route['clients/link'] = 'clients/link';
-$route['clients/edit/(:any)'] = 'clients/edit/$1';
-$route['clients/(:any)'] = 'clients/detail/$1';
-
-
-$route['cars'] = 'cars';
-$route['cars/save'] = 'cars/save';
-$route['cars/link'] = 'cars/save';
-$route['cars/edit/(:any)'] = 'cars/edit/$1';
-$route['cars/(:any)'] = 'cars/detail/$1';
-
+// 服务
 $route['service'] = 'service';
-
+// 404
 $route['404_override'] = '';
 
+
+// 通用控制器
+$route['([a-z]+s)'] = '$1';
+$route['([a-z]+s)/(:num)'] = '$1/view/$2';
+$route['([a-z]+s)/(:num)/([a-z]+)'] = '$1/$3/$2'; 
+$route['([a-z]+s)/(([a-z]+s))'] = '$1/$2'; //save，link, action
 
 /*
 | -------------------------------------------------------------------------

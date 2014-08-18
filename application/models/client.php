@@ -87,7 +87,9 @@ class Client extends CI_Model {
   }
   
   public function get_cars($cid) {
-    $query = $this->db->query("SELECT rid,rname FROM links where lid =".$cid." and ltype=1");
+    
+    $sql="SELECT rid,rname FROM links where lid = ? and ltype=?";
+    $query = $this->db->query($sql,array("lid"=>$cid,"ltype"=>1));
 
     if($query -> num_rows() > 0) {
       return $query->result_array();
