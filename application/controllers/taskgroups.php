@@ -9,7 +9,7 @@ class Taskgroups extends CI_Controller {
   }
 
   public function index(){
-	$this->load->helper('form');
+	
 	if ($this->input->get("search")) {
 	  $keyword=$this->input->get("search");
 	  $data['taskgroups'] = $this->taskgroup->search($keyword);
@@ -17,12 +17,14 @@ class Taskgroups extends CI_Controller {
 	  $data['taskgroups'] = $this->taskgroup->search();
 	}
 
+	$this->load->helper(array('form','zmform'));
+
     $this->load->view('_common/header');
     
     show_nav(11);
 
+	$data['tasks'] = $this->taskgroup->get_tasks();
     $this->load->view('taskgroups/list', $data);
-
     $this->load->view('_common/footer');
   }
 
@@ -37,7 +39,7 @@ class Taskgroups extends CI_Controller {
 	  	$this->taskgroup->remove($tgid);
 		redirect('taskgroups'); 		  
 	} else { //详情页面 基本信息 关联和未关联任务
-	  $data['taskgroup'] = $this->taskgroup->get_taskgroup($tgid);
+	  $data['taskgroup'] = $this->taskgroup->get_one($tgid);
 	  if (empty($data['taskgroup'])) show_404();
 
 	  $this->load->helper('form');
@@ -54,13 +56,16 @@ class Taskgroups extends CI_Controller {
   }
 
   public function edit($tgid) {	
-	  $data['taskgroup'] = $this->taskgroup->get_taskgroup($tgid);
+	  $data['taskgroup'] = $this->taskgroup->get_one($tgid);
 	  if (empty($data['taskgroup'])) show_404();
 
-	  $this->load->helper('form');
+	  $this->load->helper(array('form','zmform'));
 	
 	  $this->load->view('_common/header');
 	  show_nav(11);
+
+	  $data['tasks1'] = $this->taskgroup->get_tasks1($tgid);
+	  $data['tasks2'] = $this->taskgroup->get_tasks2($tgid);
 	  
 	  $this->load->view('taskgroups/edit', $data);
 	  $this->load->view('_common/footer');	  
@@ -78,7 +83,11 @@ class Taskgroups extends CI_Controller {
 	$this->load->model('link');
 	$this->link->link(Link::TYPE_TASKGROUP_TASK,$tgid,"",$taskid,$taskname);
 
-	redirect('taskgroups/'.$tgid);
+	if ($this->input->get("return")==1) {
+	  redirect('taskgroups/'.$tgid."/edit");
+	} else {
+	  redirect('taskgroups/'.$tgid);
+	}	
   }
   
   public function unlink($tgid) {
@@ -87,6 +96,10 @@ class Taskgroups extends CI_Controller {
 	$this->load->model('link');
 	$this->link->unlink(Link::TYPE_TASKGROUP_TASK,$tgid,$taskid);
 
-	redirect('taskgroups/'.$tgid);
+	if ($this->input->get("return")==1) {
+	  redirect('taskgroups/'.$tgid."/edit");
+	} else {
+	  redirect('taskgroups/'.$tgid);
+	}
   }  
 }

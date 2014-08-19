@@ -32,5 +32,12 @@ class Link extends CI_Model {
     $query = $this->db->query($sql);
     return TRUE;
   }
+  
+  public function remove($ltype,$lr,$id){    
+	$sql="delete from links where ltype=? and ?=?";
+    $query = $this->db->query($sql,$ltype,$lr==0?"lid":"rid",$id);
+    return TRUE;
+  }
+  
 
 }

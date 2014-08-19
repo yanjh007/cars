@@ -73,6 +73,14 @@ dev journal
 - route improve, wild match, no need define route for eatch resource
 - user module improvced
 
+# 20140819
+- dubug log open
+- taskgroup and tasktyps reloation in table
+- improve view for form(_form folder subviews), zmform helper
+- delete dialog(bootstrap div) 
+- link model update
+
+
 
 
 

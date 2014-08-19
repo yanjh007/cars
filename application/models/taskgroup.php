@@ -33,12 +33,29 @@ Class Taskgroup extends CI_Model {
     return TRUE;
   }
   
-  public function get_taskgroup($cid){
-    $sql= self::SQLQUERY." where id=".$cid ;
-    $query = $this->db->query($sql);
+   public function remove($id) {
+    $this->db->where('id', $id);
+    $this->db->delete('taskgroups');
+	
+	$this->load->model('link');
+    $this->db->where('ltype',Link::TYPE_TASKGROUP_TASK);
+    $this->db->where('lid', $id);
+    $this->db->delete('links');
+    return TRUE;
+  }
+  
+  public function get_one($id){
+    $query = $this->db->query(self::SQLQUERY." where id=?",$id);
     return $query->row_array();
   }
   
+  public function get_tasks() { //获取任务组相关任务	
+	$this->load->model('link');
+	$sql = "select lid,rid,rname from links where ltype = ? order by lid,rid";
+    $query = $this->db->query($sql,array(Link::TYPE_TASKGROUP_TASK));
+    return $query->result_array();
+  }
+
   public function get_tasks1($tgid) { //获取任务组相关任务
 	$this->load->model('link');
 	$sql = "select rid,rname from links where lid= ? and ltype = ? order by rid";

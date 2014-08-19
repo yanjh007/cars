@@ -6,10 +6,11 @@ class Tasktypes extends CI_Controller {
     parent::__construct();
     $this->load->model('tasktype');
     check_session();
+	log_message('error', 'tasktype module:'.$_SERVER['REQUEST_URI']);
   }
 
   public function index(){
-	$this->load->helper('form');
+	$this->load->helper(array('form','zmform'));
 	if ($this->input->get("search")) {
 	  $keyword=$this->input->get("search");
 	  $data['tasktypes'] = $this->tasktype->search($keyword);
@@ -27,40 +28,43 @@ class Tasktypes extends CI_Controller {
   }
 
   public function view($tid){
-	if ($this->input->server('REQUEST_METHOD')==="DELETE") {
+	if ($this->input->server('REQUEST_METHOD')==="DELETE") { // AJAX
+	  log_message('error', 'ajax delete:'.$tid);
 	  $this->tasktype->remove($tid);
+	  
 	  echo "OK";
 	  return;
 	}
 	
 	if ($this->input->get("method") === "delete") {
 	  	$this->tasktype->remove($tid);
-		redirect('users'); 		  
+		redirect('tasktypes'); 		  
 	} else { //详情页面 基本信息 车辆信息
-	  $data['tasktype'] = $this->tasktype->get_tasktype($tid);
+	  $data['tasktype'] = $this->tasktype->get_one($tid);
 	  if (empty($data['tasktype'])) show_404();
 
 	  $this->load->helper('form');
 	  $this->load->view('_common/header');
 	  show_nav(11);
 	  
-	  $data['cars'] = $this->tasktype->get_cars($tid);
-	  $this->load->view('users/detail', $data);
+	  $data['cars'] = $this->tasktype->get_one($tid);
+	  $this->load->view('tasktypes/detail', $data);
 	  
 	  $this->load->view('_common/footer');	  
 	}
   }
 
   public function edit($tid) {	
-	  $data['tasktype'] = $this->tasktype->get_tasktype($tid);
+	  $data['tasktype'] = $this->tasktype->get_one($tid);
 	  if (empty($data['tasktype'])) show_404();
 
-	  $this->load->helper('form');
+	  $this->load->helper(array('form', 'zmform',"nav"));
 	
 	  $this->load->view('_common/header');
 	  show_nav(11);
 	  
-	  $this->load->view('users/edit', $data);
+	  var_dump($data);
+	  $this->load->view('tasktypes/edit', $data);
 	  $this->load->view('_common/footer');	  
   }
   
@@ -70,7 +74,7 @@ class Tasktypes extends CI_Controller {
   }
   
   public function link() {
-	$userid=$this->input->post("user_id");
+	$userid=$this->input->post("tasktype_id");
 	if ($userid) {
 	  $this->tasktype->link($this->input->post());
 	  redirect('tasktypes/'.$tasktypeid);

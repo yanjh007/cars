@@ -19,6 +19,11 @@ Class Tasktype extends CI_Model {
   }
 
   public function save($tasktype) {
+    //var_dump($tasktype);
+    
+    if ($tasktype["name"]==NULL || $tasktype["name"]=="") $tasktype["name"]="未命名";
+    
+    
     $data = array(
            'tcode'     => $tasktype["tcode"],
            'name'      => $tasktype["name"],
@@ -37,10 +42,20 @@ Class Tasktype extends CI_Model {
     return TRUE;
   }
   
-  public function get_tasktype($cid){
-    $sql="SELECT id,name,mobile,wechat FROM tasktypes where id=".$cid ;
-    $query = $this->db->query($sql);
+  public function get_one($id){
+    $query = $this->db->query(self::SQLQUERY." where id=?",$id);
     return $query->row_array();
+  }
+ 
+  public function remove($id) {
+    $this->db->where('id', $id);
+    $this->db->delete('tasktypes');
+	
+	$this->load->model('link');
+    $this->db->where('ltype',Link::TYPE_TASKGROUP_TASK);
+    $this->db->where('rid', $id);
+    $this->db->delete('links');
+    return TRUE;
   }
  
 }

@@ -15,6 +15,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="#">服务管理</a></li>
+        <li><a href="#">知识管理</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">客户管理 <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -39,14 +40,14 @@
                   <li><?= anchor(base_url("taskgroups"),"任务组管理") ?></li>
                   <li class="divider"></li>
                   <li><?= anchor(base_url("dics"),"字典管理") ?></li>
-                  <li><a href="settings">系统设置</a></li>
+                  <li><?= anchor(base_url("syssettings"),"系统设置") ?></li>
                 </ul>
             </li>
          <?php } ?>
          <li class="dropdown">
              <a href="#" class="dropdown-toggle" data-toggle="dropdown">当前用户: <?php echo $username ?> <span class="caret"></span></a>
              <ul class="dropdown-menu" role="menu">
-               <li><a href="#">用户设置</a></li>
+               <li><?= anchor(base_url("usersettings"),"用户设置") ?></li>
                <li><a href="#">通知</a></li>
                <li class="divider"></li>
                <li><a href="logout">注销</a></li>
