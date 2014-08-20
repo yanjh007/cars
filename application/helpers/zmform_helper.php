@@ -12,9 +12,31 @@
  * CodeIgniter base_url function to support
  * CDN'ized content.
  */
-function zm_form_input($ftype,$title,$name,$value)
+
+function zm_form_select($ftype,$title,$name,$list,$select="")
 {
-   
+   $CI=&get_instance();
+   $form_data["title"]    = $title;
+   $form_data["name"]     = $name;
+   $form_data["list"]     = $list;
+   $form_data["select"]   = $select;
+   $CI->load->view('_form/select_'.$ftype,$form_data);   
+}
+
+
+function zm_form_radio($ftype,$title,$name,$list,$select="")
+{
+   $CI=&get_instance();
+   $form_data["title"]    = $title;
+   $form_data["name"]     = $name;
+   $form_data["list"]     = $list;
+   $form_data["select"]   = $select;
+
+   $CI->load->view('_form/radio_'.$ftype,$form_data);   
+}
+
+function zm_form_input($ftype,$title,$name,$value)
+{  
    $CI=&get_instance();
    $form_data["title"] = $title;
    $form_data["name"]  = $name;

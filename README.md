@@ -80,6 +80,12 @@ dev journal
 - delete dialog(bootstrap div) 
 - link model update
 
+# 20140820
+- appointment module begin, 
+- user module updated, user modify, shop select, shop table join
+- form improve, select, radio template
+- 
+
 
 
 

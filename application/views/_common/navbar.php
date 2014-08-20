@@ -23,7 +23,7 @@
             <li><a href="<?= base_url("cars") ?>">车辆管理</a></li>
             <li><a href="<?= base_url("plans") ?>">维护计划</a></li>
             <li class="divider"></li>
-            <li><a href="#">预约管理</a></li>
+            <li><?= anchor(base_url("appointments"),"预约管理") ?></li>
             <li><a href="prices">报价管理</a></li>
           </ul>
         </li>

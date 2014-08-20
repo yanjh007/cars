@@ -33,10 +33,10 @@
 		            <td><?= $item['login']; ?></td>
 		            <td><?= anchor("user/".$item["id"],$item["name"],""); ?></td>
 		            <td><?= $item['mobile']; ?></td>
-		            <td><?= $item['role']; ?></td>
-		            <td><?= $item['mobile']; ?></td>
+		            <td><?= $rolelist[$item['role']]; ?></td>
+		            <td><?= $item['shopname']; ?></td>
 		            <td align=right>
-		            	<?= anchor("clients/".$item["id"]."/edit","编辑"); ?> |
+		            	<?= anchor("users/".$item["id"]."/edit","编辑"); ?> |
 						<a href="#" onclick="confirm_del(<?= $item["id"].",'".$item["name"]."'" ?>);">删除</a>
 		            </td>
 		          </tr>
@@ -51,7 +51,7 @@
 				<!-- Default panel contents -->
 				<div class="panel-heading">增加用户</div>				
 				<div class="panel-body">				
-					<?= form_open('clients/save',array("role"=>"form")); ?>
+					<?= form_open('users/save',array("role"=>"form")); ?>
 					<div class="form-group">
 					  <label for="exampleInputEmail1">显示名称</label>
 					  <?= form_input(array( 'name'  => 'name',
@@ -88,14 +88,14 @@
 <script type="text/javascript">
 	function confirm_del(cid,cname){
 		$("#cname").text(cname);
-		$("#clientid").text(cid);
+		$("#userid").text(cid);
 		$('#dlg_remove').modal('show').on('shown',function() {			 
 		})
 	}
 
 	function do_del(){
 		//this will redirect us in same window
-		document.location.href = "clients/"+$("#clientid").text()+"?method=delete";
+		document.location.href = "users/"+$("#userid").text()+"?method=delete";
 	}
 	
 	function do_search() {
@@ -103,7 +103,7 @@
 		
 		//this will redirect us in same window
 		if (keyword.length>0){
-			document.location.href = "clients?search="+keyword;
+			document.location.href = "users?search="+keyword;
 		} else {
 			alert( "搜索关键字无效");
 		}		
@@ -111,14 +111,14 @@
 	
 	function ajax_del(){
 		$('#dlg_remove').modal('hide');
-		var clientid=$("#clientid").text();
+		var userid=$("#userid").text();
 		$.ajax({
 			type: "DELETE",
-			url: "clients/"+clientid,
+			url: "users/"+userid,
 		})
 		.done(function( msg ) {
 			if (msg == "OK"){
-				document.location.href = "clients/";
+				document.location.href = "users/";
 			} else {
 				alert( "处理错误:" + msg );
 			}
@@ -127,7 +127,7 @@
 
 </script>  
 
-<div id="clientid" class="hide"></div>
+<div id="userid" class="hide"></div>
 <div class="modal fade" id="dlg_remove">
   <div class="modal-dialog">
     <div class="modal-content">

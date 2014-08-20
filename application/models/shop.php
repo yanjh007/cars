@@ -53,6 +53,13 @@ class Shop extends CI_Model {
     return TRUE;
   }
   
+  // 选择用列表
+  public function select_list() {
+	$sql="select id,scode,name from shops order by scode";
+	$query = $this->db->query($sql);
+    return $query->result_array();
+  }
+  
   public function link($shop) {
     $car_number = $shop["carnumber"];
 	if (isset($car_number) ) {

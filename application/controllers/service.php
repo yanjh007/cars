@@ -1,6 +1,5 @@
 <?php
 class Service extends CI_Controller {
-
   public function __construct()
   {
     parent::__construct();
@@ -69,18 +68,17 @@ class Service extends CI_Controller {
 	$this->load->view('service/verify_false', $data);	
   }  
 
-  public function client($cid) { //客户服务接口
-  	$data['client'] = $this->client->get_client($cid);
+  public function client($action="") { //客户服务接口
+	if ($action=="login") {
+	  echo "Login OK";	  
+	} else {
+	  echo "OK";	  
+	}
+  }
+  
+  public function user($action) { //客户服务接口
 
-  	if (empty($data['client'])){
-	  show_404();
-  	}
 
-  	$this->load->view('_common/header');
-	show_nav(11);
-	
-  	$this->load->view('clients/detail', $data);
-  	$this->load->view('_common/footer');
   }
 
 }
